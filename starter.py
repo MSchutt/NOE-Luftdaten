@@ -41,7 +41,7 @@ if len(df) == 0 or df[selected_sensor].isna().all():
 st.markdown("""---""")
 
 # Map Selection returns all sort of options (clicked market, etc.) -> maybe we want to do something with that later?
-# map_selection = get_map(station_coordinates)
+map_selection = get_map(station_coordinates)
 
 # Plot the line chart, create an individual line for each station
 tabs = st.tabs(selected_stations)
