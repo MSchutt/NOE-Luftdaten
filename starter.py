@@ -8,7 +8,7 @@ from parts.plots.yearly_avg import get_per_year_avg_plot
 from utils.dto import FilterConfig
 from utils.filter import get_global_sensor_averages
 from utils.generic import db_get_daterange, db_get_stations
-
+from utils.air_quality_indeces import calculate_and_plot_indices
 
 st.title("Niederösterreich - Luftgüte")
 
@@ -43,3 +43,7 @@ get_monthly_averages_plot(filter_config)
 
 # Per Year Plot
 get_per_year_avg_plot(filter_config)
+
+# Plot Air Quality Index of last hour
+# calculate_and_plot_indices(hourly_df, selected_stations, selected_sensor, human_readable_sensor)
+
