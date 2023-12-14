@@ -45,5 +45,5 @@ get_monthly_averages_plot(filter_config)
 get_per_year_avg_plot(filter_config)
 
 # Plot Air Quality Index of last hour
-# calculate_and_plot_indices(hourly_df, selected_stations, selected_sensor, human_readable_sensor)
+calculate_and_plot_indices(filter_config)
 

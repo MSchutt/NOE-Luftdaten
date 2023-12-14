@@ -8,6 +8,27 @@ from utils.db import get_db
 from utils.dto import FilterConfig
 
 
+def daily_aggregate(config: FilterConfig) -> pd.DataFrame:
+    """ Returns the daily aggregate for the given filter configuration.
+
+    Args:
+        config (FilterConfig): The filter configuration.
+
+    Returns:
+        pd.DataFrame: The DataFrame containing the daily aggregate.
+    """    
+    
+    qry = f"""
+    SELECT Station, Datetime, {config.selected_sensor} as {config.selected_sensor} FROM {LUFTDATEN_DAILY_AGG_TABLE}
+    WHERE Datetime >= %(start_date)s
+    AND Datetime <= %(end_date)s
+    AND Station IN %(selected_stations)s
+    """
+    
+    return get_db().query_df(qry, { "start_date": config.start_date, "end_date": config.end_date, "selected_stations": config.selected_stations })
+    
+
+
 def get_per_day_averages(config: FilterConfig) -> pd.DataFrame:
     """ Returns the per day averages for the given filter configuration.
 
