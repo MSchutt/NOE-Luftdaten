@@ -45,13 +45,13 @@ def calculate_and_plot_indices(config: FilterConfig) -> None:
             station = station.drop('rolling')
 
             # Plot indices for last hour
-            st.metric(label=f"Europäischer Luftqualitätsindex für {config.human_readable_sensor} ({fmt_start_date} - {fmt_end_date})", value=station[selected_sensor][-1])
+            st.metric(label=f"Europäischer Luftqualitätsindex in {selected_station} für {config.human_readable_sensor} ({fmt_start_date} - {fmt_end_date})", value=station[selected_sensor][-1])
 
         else:
             # Create bins which contain the different labels
             station[selected_sensor] = pd.cut(station[selected_sensor], bins = LIMITS[selected_sensor], labels=LABELS)
 
             # Plot indices for last hour
-            st.metric(label=f"Europäischer Luftqualitätsindex für {config.human_readable_sensor} ({fmt_start_date} - {fmt_end_date})", value=station[selected_sensor][-1])
+            st.metric(label=f"Europäischer Luftqualitätsindex in {selected_station} für {config.human_readable_sensor} ({fmt_start_date} - {fmt_end_date})", value=station[selected_sensor][-1])
 
 
