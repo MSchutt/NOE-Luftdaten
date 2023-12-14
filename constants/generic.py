@@ -9,8 +9,8 @@ ALWAYS_KEEP_COLUMNS = ["Station", "Longitude", "Latitude", "Altitude", "Datetime
 
 
 # Defaults for the filter
-DEFAULT_START_DATE = pd.Timestamp(year=2017, month=1, day=1, tzinfo=pytz.UTC).to_pydatetime()
-DEFAULT_END_DATE = pd.Timestamp(year=2022, month=12, day=31, tzinfo=pytz.UTC).to_pydatetime()
+DEFAULT_START_DATE = pd.Timestamp(year=2017, month=1, day=1).to_pydatetime()
+DEFAULT_END_DATE = pd.Timestamp(year=2022, month=12, day=31).to_pydatetime()
 DEFAULT_STATION = "St. Pölten"
 DEFAULT_SENSOR = "T"
 

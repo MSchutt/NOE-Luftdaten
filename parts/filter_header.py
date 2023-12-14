@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 from typing import Tuple, Dict, List
 from datetime import datetime
+import pytz
 
 from constants.generic import DEFAULT_END_DATE, DEFAULT_SENSOR, DEFAULT_START_DATE, DEFAULT_STATION, MAX_STATIONS_SELECT
 
@@ -54,7 +55,7 @@ def get_daterange_slider(label: str, min_date: datetime, max_date: datetime) -> 
     
     return st.slider(
         label,
-        min_value=min_date,
-        max_value=max_date,
-        value=(DEFAULT_START_DATE, DEFAULT_END_DATE)
+        min_value=min_date.replace(tzinfo=None),
+        max_value=max_date.replace(tzinfo=None),
+        value=(DEFAULT_START_DATE.replace(tzinfo=None), DEFAULT_END_DATE.replace(tzinfo=None))
     )
