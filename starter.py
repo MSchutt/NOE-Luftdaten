@@ -6,7 +6,7 @@ from parts.map import get_map
 from parts.plots.generic import get_generic_line_chart
 from utils.filter import apply_time_station_filter, extract_station_coordinates, get_global_sensor_averages
 from utils.generic import db_get_daterange, db_get_stations
-
+from utils.air_quality_indeces import calculate_and_plot_indices
 
 st.title("Niederösterreich - Luftgüte")
 
@@ -19,6 +19,7 @@ target_year = end_date.year
 
 
 # Apply the filter
+hourly_df = apply_time_station_filter(start_date, end_date, selected_stations, selected_sensor, table_name=LUFTDATEN_HOURLY_AGG_TABLE)
 daily_df = apply_time_station_filter(start_date, end_date, selected_stations, selected_sensor, table_name=LUFTDATEN_DAILY_AGG_TABLE)
 weekly_df = apply_time_station_filter(start_date, end_date, selected_stations, selected_sensor, table_name=LUFTDATEN_WEEKLY_AGG_TABLE)
 monthly_df = apply_time_station_filter(start_date, end_date, selected_stations, selected_sensor, table_name=LUFTDATEN_MONTHLY_AGG_TABLE)
@@ -44,3 +45,5 @@ else:
     st.plotly_chart(get_generic_line_chart(monthly_df, selected_sensor, global_sensor_average, title=f"Monatsdurchschnitt für {human_readable_sensor}"))
     st.plotly_chart(get_generic_line_chart(yearly_df, selected_sensor, global_sensor_average, title=f"Jahresdurchschnitt für {human_readable_sensor}"))
     
+    # Plot Air Quality Index of last hour
+    calculate_and_plot_indices(hourly_df, selected_stations, selected_sensor, human_readable_sensor)
