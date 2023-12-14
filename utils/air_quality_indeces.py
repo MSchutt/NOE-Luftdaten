@@ -23,7 +23,7 @@ def calculate_and_plot_indices(config: FilterConfig) -> None:
     """
     # Only requires the rolling window of the last 24 days.
     end_date = config.end_date
-    start_date = end_date - timedelta(days=30)
+    start_date = end_date - timedelta(days=60)
     config.start_date = start_date
     
     df = daily_aggregate(config).set_index("Datetime")
