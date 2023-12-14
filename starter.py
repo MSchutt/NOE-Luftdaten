@@ -3,6 +3,7 @@ from constants.generic import DATETIME_COLUMN, MEAN_COLUMN_NAME
 from constants.sensor import POSSIBLE_SENSOR_MAP
 from parts.filter_header import get_filter_header
 from parts.map import get_map
+from parts.plots.generic import get_generic_line_chart
 from utils.filter import apply_time_station_filter, extract_station_coordinates
 from utils.generic import db_get_daterange, db_get_stations
 
@@ -32,21 +33,4 @@ st.markdown("""---""")
 map_selection = get_map(station_coordinates)
 
 # Plot the line chart, create an individual line for each station
-tabs = st.tabs(selected_stations)
-
-st.write(df.head(10))
-
-# Generic plot
-for i, tab in enumerate(tabs):
-    with tab:
-        df_station = df[df["Station"] == selected_stations[i]].copy()
-        df_station[MEAN_COLUMN_NAME] = df_station[selected_sensor].mean()
-        
-        if len(df_station) == 0 or df_station[selected_sensor].isna().all():
-            st.warning("Keine Daten gefunden - an dieser Station ist dieser Sensor leider nicht verbaut.")
-        else:
-            st.line_chart(
-                df_station,
-                x=DATETIME_COLUMN,
-                y=[selected_sensor, MEAN_COLUMN_NAME]
-            )
+st.plotly_chart(get_generic_line_chart(df, selected_sensor))
