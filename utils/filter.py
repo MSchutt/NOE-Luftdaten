@@ -3,10 +3,11 @@ import streamlit as st
 from datetime import datetime
 from typing import List, Union
 
-from constants.generic import ALWAYS_KEEP_COLUMNS
+from constants.generic import ALWAYS_KEEP_COLUMNS, LUFTDATEN_TABLE
+from utils.db import get_db
 
 @st.cache_data
-def apply_time_station_filter(df: pd.DataFrame, start_date: datetime, end_date: datetime, selected_stations: List[str], selected_sensor: Union[List[str], str]) -> pd.DataFrame:
+def apply_time_station_filter(start_date: datetime, end_date: datetime, selected_stations: List[str], selected_sensor: Union[List[str], str]) -> pd.DataFrame:
     """
     Apply filters to a DataFrame based on start date, end date, and selected stations.
 
@@ -22,14 +23,22 @@ def apply_time_station_filter(df: pd.DataFrame, start_date: datetime, end_date: 
     """
     # We probably do not need this, but just in case we can pass a list of sensors, if we decide that we want to plot multiple sensors at once
     sensor_filter = selected_sensor if isinstance(selected_sensor, list) else [selected_sensor]
-    target_cols = [*ALWAYS_KEEP_COLUMNS, *sensor_filter]
+    target_cols = ",".join([*ALWAYS_KEEP_COLUMNS, *sensor_filter])
     
-    filter_df = df[
-        (df["Station"].isin(selected_stations)) &
-        (df["Datetime_Start"] >= start_date) &
-        (df["Datetime_End"] <= end_date)
-    ]
-    return filter_df[target_cols]
+    st.write(target_cols)
+    
+    qry = f"""
+    SELECT {target_cols} FROM {LUFTDATEN_TABLE}
+    WHERE Station IN %(selected_stations)s
+    AND Datetime_Start >= %(start_date)s
+    AND Datetime_Start <= %(end_date)s
+    """
+    
+    db = get_db()
+    
+    df = db.query_df(qry, { "selected_stations": selected_stations, "start_date": start_date, "end_date": end_date, "target_cols": target_cols })
+    
+    return df
     
 
 

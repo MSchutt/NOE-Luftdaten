@@ -1,36 +1,24 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
-import folium
-from streamlit_folium import st_folium
-from constants.generic import DATETIME_COLUMN, MEAN_COLUMN_NAME, NOE_MAP_CENTER
+from constants.generic import DATETIME_COLUMN, MEAN_COLUMN_NAME
 from constants.sensor import POSSIBLE_SENSOR_MAP
 from parts.filter_header import get_filter_header
 from parts.map import get_map
-from parts.plots.generic import get_generic_line_chart
-from utils.calculate import calculate_yearly_aggregate
 from utils.filter import apply_time_station_filter, extract_station_coordinates
-
-from utils.generic import get_data
-
+from utils.generic import db_get_daterange, db_get_stations
 
 
 st.title("Niederösterreich - Luftgüte")
 
-main_df = get_data()
+min_date, max_date = db_get_daterange()
+possible_stations = db_get_stations()
 
-min_date = main_df["Datetime_Start"].min()
-max_date = main_df["Datetime_Start"].max()
-
-
-possible_stations = main_df["Station"].unique().tolist()
 
 start_date, end_date, selected_stations, selected_sensor = get_filter_header(min_date, max_date, possible_stations, POSSIBLE_SENSOR_MAP)
 target_year = end_date.year
 
 
 # Apply the filter
-df = apply_time_station_filter(main_df, start_date, end_date, selected_stations, selected_sensor)
+df = apply_time_station_filter(start_date, end_date, selected_stations, selected_sensor)
 # yearly_agg = calculate_yearly_aggregate(df)
 
 station_coordinates = extract_station_coordinates(df, lat_col="Latitude", lon_col="Longitude", station_col="Station", altitude_col="Altitude")
