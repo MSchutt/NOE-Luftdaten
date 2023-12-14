@@ -1,13 +1,46 @@
 import pandas as pd
 import streamlit as st
 from datetime import datetime
-from typing import List, Union
+from typing import List, Union, Dict
 
-from constants.generic import ALWAYS_KEEP_COLUMNS, LUFTDATEN_TABLE
+from constants.generic import ALWAYS_KEEP_COLUMNS, LUFTDATEN_DAILY_AGG_TABLE, LUFTDATEN_TABLE
 from utils.db import get_db
 
+
 @st.cache_data
-def apply_time_station_filter(start_date: datetime, end_date: datetime, selected_stations: List[str], selected_sensor: Union[List[str], str]) -> pd.DataFrame:
+def get_global_sensor_averages(start_date: datetime, end_date: datetime) -> Dict[str, float]:
+    """
+    Get the averages from the database for the given time range.
+
+    Args:
+        start_date (datetime): The start date for the filter.
+        end_date (datetime): The end date for the filter.
+
+    Returns:
+        pd.DataFrame: The DataFrame containing the averages.
+    """
+    qry = f"""
+    SELECT avg(G) as G_avg, avg(NO) as NO_avg, avg(NO2) as NO2_avg, avg(O3) as O3_avg, avg(PM10) as PM10_avg, avg(PM2_5) as PM2_5_avg, avg(T) as T_avg FROM {LUFTDATEN_TABLE}
+    WHERE Datetime_Start >= %(start_date)s
+    AND Datetime_Start <= %(end_date)s
+    """
+    
+    db = get_db()
+
+    df = db.query_df(qry, { "start_date": start_date, "end_date": end_date })
+    
+    return {
+        "G": df["G_avg"].iloc[0],
+        "NO": df["NO_avg"].iloc[0],
+        "NO2": df["NO2_avg"].iloc[0],
+        "O3": df["O3_avg"].iloc[0],
+        "PM10": df["PM10_avg"].iloc[0],
+        "PM2_5": df["PM2_5_avg"].iloc[0],
+        "T": df["T_avg"].iloc[0],
+    }
+
+@st.cache_data
+def apply_time_station_filter(start_date: datetime, end_date: datetime, selected_stations: List[str], selected_sensor: Union[List[str], str], table_name: str = LUFTDATEN_DAILY_AGG_TABLE) -> pd.DataFrame:
     """
     Apply filters to a DataFrame based on start date, end date, and selected stations.
 
@@ -25,13 +58,11 @@ def apply_time_station_filter(start_date: datetime, end_date: datetime, selected
     sensor_filter = selected_sensor if isinstance(selected_sensor, list) else [selected_sensor]
     target_cols = ",".join([*ALWAYS_KEEP_COLUMNS, *sensor_filter])
     
-    st.write(target_cols)
-    
     qry = f"""
-    SELECT {target_cols} FROM {LUFTDATEN_TABLE}
+    SELECT {target_cols} FROM {table_name}
     WHERE Station IN %(selected_stations)s
-    AND Datetime_Start >= %(start_date)s
-    AND Datetime_Start <= %(end_date)s
+    AND Datetime >= %(start_date)s
+    AND Datetime <= %(end_date)s
     """
     
     db = get_db()

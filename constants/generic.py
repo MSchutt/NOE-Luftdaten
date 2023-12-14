@@ -5,7 +5,7 @@ import pytz
 NOE_MAP_CENTER = (48.1937506, 15.5646155)
 
 # Columns we always want to keep
-ALWAYS_KEEP_COLUMNS = ["Station", "Datetime_Start", "Datetime_End", "Longitude", "Latitude", "Altitude"]
+ALWAYS_KEEP_COLUMNS = ["Station", "Longitude", "Latitude", "Altitude", "Datetime"]
 
 
 # Defaults for the filter
@@ -15,8 +15,13 @@ DEFAULT_STATION = "St. Pölten"
 DEFAULT_SENSOR = "T"
 
 # Column names
-DATETIME_COLUMN = "Datetime_Start"
+DATETIME_COLUMN = "Datetime"
 MEAN_COLUMN_NAME = "Durchschnitt"
 
 # Table Name
 LUFTDATEN_TABLE = "luftdaten_clean"
+LUFTDATEN_YEARLY_AGG_TABLE = "luftdaten_yearly_agg"
+LUFTDATEN_MONTHLY_AGG_TABLE = "luftdaten_monthly_agg"
+LUFTDATEN_WEEKLY_AGG_TABLE = "luftdaten_weekly_agg"
+LUFTDATEN_DAILY_AGG_TABLE = "luftdaten_daily_agg"
+LUFTDATEN_HOURLY_AGG_TABLE = "luftdaten_hourly_agg"
