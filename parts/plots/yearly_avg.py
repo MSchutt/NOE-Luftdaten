@@ -20,7 +20,7 @@ def get_per_year_avg_plot(config: FilterConfig) -> pd.DataFrame:
         legend_title="Station"
     )
 
-    return st.plotly_chart(fig)
+    return st.plotly_chart(fig, use_container_width=True)
     
     
     

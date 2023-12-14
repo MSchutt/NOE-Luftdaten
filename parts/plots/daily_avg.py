@@ -36,4 +36,4 @@ def get_daily_chart(config: FilterConfig):
         legend_title="Station"
     )
     
-    return st.plotly_chart(fig)
+    return st.plotly_chart(fig, use_container_width=True)

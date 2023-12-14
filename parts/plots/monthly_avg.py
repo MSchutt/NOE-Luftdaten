@@ -71,5 +71,5 @@ def get_monthly_averages_plot(filter_config: FilterConfig):
         legend_title="Stationen",
     )
     
-    return st.plotly_chart(fig)
+    return st.plotly_chart(fig, use_container_width=True)
     
