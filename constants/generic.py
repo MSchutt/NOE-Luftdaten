@@ -14,6 +14,9 @@ DEFAULT_END_DATE = pd.Timestamp(year=2022, month=12, day=31, tzinfo=pytz.UTC).to
 DEFAULT_STATION = "St. Pölten"
 DEFAULT_SENSOR = "T"
 
+# Maximum Number of Stations to select
+MAX_STATIONS_SELECT = 3
+
 # Column names
 DATETIME_COLUMN = "Datetime"
 MEAN_COLUMN_NAME = "Durchschnitt"

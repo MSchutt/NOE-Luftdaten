@@ -8,7 +8,6 @@ from datetime import datetime
 from utils.db import get_db
 
 
-@st.cache_data
 def db_get_stations() -> List[str]:
     db = get_db()
     
@@ -19,7 +18,6 @@ def db_get_stations() -> List[str]:
     return stations["Station"].tolist()
 
 
-@st.cache_data
 def db_get_daterange() -> Tuple[datetime, datetime]:
     db = get_db()
     
