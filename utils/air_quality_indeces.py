@@ -38,7 +38,7 @@ def calculate_and_plot_indices(config: FilterConfig) -> None:
         index_start_date = df[df['Station'] == selected_station][:25]
         index_end_date = df[df['Station'] == selected_station][-25:]
 
-        if index_start_date.isna().sum() == 0 and index_end_date == 0:
+        if index_start_date[selected_sensor].isna().sum() == 0 and index_end_date[selected_sensor].isna().sum() == 0 and selected_sensor in LIMITS.keys():
 
             if selected_sensor == 'PM10' or selected_sensor == 'PM2_5':
                 # Calculate rolling mean of the last 24 rows
@@ -48,11 +48,8 @@ def calculate_and_plot_indices(config: FilterConfig) -> None:
                 index_start_date[selected_sensor] = pd.cut(index_start_date['rolling'], bins = LIMITS[selected_sensor], labels=LABELS)
                 index_end_date[selected_sensor] = pd.cut(index_end_date['rolling'], bins = LIMITS[selected_sensor], labels=LABELS)
 
-                index_start_date = index_start_date.drop('rolling')
-                index_end_date = index_end_date.drop('rolling')
-
                 # Plot indices for last hour
-                st.metric(label=f"Europäischer Luftqualitätsindex in {selected_station} für {config.human_readable_sensor} ({fmt_start_date} - {fmt_end_date})", value=index_start_date[selected_sensor][-1], delta = index_end_date[selected_sensor][-1])
+                st.metric(label=f"Europäischer Luftqualitätsindex in {selected_station} für {config.human_readable_sensor} ({fmt_start_date} - {fmt_end_date})", value=index_end_date[selected_sensor][-1], delta = index_start_date[selected_sensor][-1])
 
             else:
                 # Create bins which contain the different labels
@@ -60,7 +57,7 @@ def calculate_and_plot_indices(config: FilterConfig) -> None:
                 index_end_date[selected_sensor] = pd.cut(index_end_date[selected_sensor], bins = LIMITS[selected_sensor], labels=LABELS)
 
                 # Plot indices for last hour
-                st.metric(label=f"Europäischer Luftqualitätsindex in {selected_station} für {config.human_readable_sensor} ({fmt_start_date} - {fmt_end_date})", value=index_start_date[selected_sensor][-1], delta = index_end_date[selected_sensor][-1])
+                st.metric(label=f"Europäischer Luftqualitätsindex in {selected_station} für {config.human_readable_sensor} ({fmt_start_date} - {fmt_end_date})", value= index_end_date[selected_sensor][-1], delta = index_start_date[selected_sensor][-1])
         else:
-            st.metric(label=f"Europäischer Luftqualitätsindex in {selected_station} für {config.human_readable_sensor} ({fmt_start_date} - {fmt_end_date})", value='-')
+            st.metric(label=f"Nicht verfügbar: Europäischer Luftqualitätsindex in {selected_station} für {config.human_readable_sensor} ({fmt_start_date} - {fmt_end_date})", value='-')
 
