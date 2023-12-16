@@ -20,8 +20,13 @@ def get_filter_header(min_date: datetime, max_date: datetime, possible_stations:
     Returns:
         Tuple[datetime, datetime, List[str], str]: A tuple containing the start date, end date, selected stations, and selected sensor.
     """
-    (start_date, end_date) = get_daterange_slider("Datum", min_date, max_date)
-    
+    result = get_daterange_slider("Datum", min_date, max_date)
+    # Only 1 date selected
+    if len(result) == 1:
+        start_date = result[0]
+        end_date = None
+    elif len(result) == 2:
+        start_date, end_date = result
     
     col1, col2 = st.columns(2)
     
@@ -52,6 +57,14 @@ def get_daterange_slider(label: str, min_date: datetime, max_date: datetime) -> 
     Returns:
         Streamlit Slider Element
     """
+    
+    return st.date_input(
+        label,
+        (min_date.replace(tzinfo=None), max_date.replace(tzinfo=None)),
+        min_date,
+        max_date,
+        format="DD.MM.YYYY"
+    )
     
     return st.slider(
         label,

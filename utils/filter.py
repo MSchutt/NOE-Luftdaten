@@ -22,6 +22,7 @@ def hourly_aggregate(config: FilterConfig) -> pd.DataFrame:
     WHERE Datetime >= %(start_date)s
     AND Datetime <= %(end_date)s
     AND Station IN %(selected_stations)s
+    ORDER BY Datetime
     """
     
     return get_db().query_df(qry, { "start_date": config.start_date, "end_date": config.end_date, "selected_stations": config.selected_stations })
@@ -162,7 +163,7 @@ def load_station_coordinates(config: FilterConfig) -> pd.DataFrame:
     """
     db = get_db()
     
-    df = db.query_df(f"SELECT Station, Longitude, Latitude, Altitude FROM {LUFTDATEN_TABLE} WHERE Station IN %(selected_stations)s", { "selected_stations": config.selected_stations })
+    df = db.query_df(f"SELECT DISTINCT Station, Longitude, Latitude, Altitude FROM {LUFTDATEN_TABLE} WHERE Station IN %(selected_stations)s", { "selected_stations": config.selected_stations })
     
     df["info"] = df.apply(lambda row: f"{row['Station']} ({int(row['Altitude'])}m)", axis=1)
     
