@@ -12,7 +12,7 @@ from utils.filter import get_global_sensor_averages
 from utils.mapper import format_timestamp
 
 
-st.title("Niederösterreich - Luftgüte")
+st.title("Niederösterreich - Luftgüte - Extremwerte")
 
 # Dropdown select
 selected_type = st.selectbox("Extremwert", ["Maximum", "Minimum"])

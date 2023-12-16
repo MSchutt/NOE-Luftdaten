@@ -10,7 +10,7 @@ from utils.filter import get_global_sensor_averages
 from utils.generic import db_get_daterange, db_get_stations
 from utils.air_quality_indeces import calculate_and_plot_indices
 
-st.title("Niederösterreich - Luftgüte")
+st.title("Niederösterreich - Luftgüte - Übersicht")
 
 min_date, max_date = db_get_daterange()
 possible_stations = db_get_stations()

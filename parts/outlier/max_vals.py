@@ -55,7 +55,7 @@ def get_aggregated_extreme_values(year: int, use_min = False, table_name = LUFTD
         Rank_PM10 = 1 OR
         Rank_PM2_5 = 1 OR
         Rank_T = 1
-    ORDER BY max_col    
+    ORDER BY max_col
     """
     
     return db.query_df(qry, { "year": year })

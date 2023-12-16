@@ -28,3 +28,12 @@ LUFTDATEN_MONTHLY_AGG_TABLE = "luftdaten_monthly_agg"
 LUFTDATEN_WEEKLY_AGG_TABLE = "luftdaten_weekly_agg"
 LUFTDATEN_DAILY_AGG_TABLE = "luftdaten_daily_agg"
 LUFTDATEN_HOURLY_AGG_TABLE = "luftdaten_hourly_agg"
+
+# Aggregation Levels
+AGGREGATION_LEVELS_TABLES = {
+    "Jahresmittelwerte": LUFTDATEN_YEARLY_AGG_TABLE,
+    "Monatsmittelwerte": LUFTDATEN_MONTHLY_AGG_TABLE,
+    "Wochenmittelwerte": LUFTDATEN_WEEKLY_AGG_TABLE,
+    "Tagesmittelwerte": LUFTDATEN_DAILY_AGG_TABLE,
+    "Stundenmittelwerte": LUFTDATEN_HOURLY_AGG_TABLE
+}
