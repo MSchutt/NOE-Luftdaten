@@ -16,11 +16,11 @@ st.title("Niederösterreich - Luftgüte - Extremwerte")
 
 # Dropdown select
 selected_type = st.selectbox("Extremwert", ["Maximum", "Minimum"])
-aggregate_type = st.selectbox("Aggregationsart", ["HMW (Stundenmittelwert)", "TMW (Tagesmittelwert)"])
+aggregate_type = st.selectbox("Aggregationsart", ["Stundenmittelwert", "Tagesmittelwert"])
 
 use_min = bool(selected_type == "Minimum")
 
-tbl = LUFTDATEN_HOURLY_AGG_TABLE if aggregate_type == "HMW (Stundenmittelwert)" else LUFTDATEN_DAILY_AGG_TABLE
+tbl = LUFTDATEN_HOURLY_AGG_TABLE if aggregate_type == "Stundenmittelwert" else LUFTDATEN_DAILY_AGG_TABLE
 
 year = st.slider("Jahr", 2013, 2022, 2022)
 df = get_aggregated_extreme_values(year, use_min=use_min, table_name=tbl)
