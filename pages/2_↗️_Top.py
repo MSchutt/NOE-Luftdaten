@@ -12,7 +12,7 @@ from utils.dto import FilterConfig
 from utils.filter import get_global_sensor_averages
 
 
-st.title("Niederösterreich - Luftgüte - Durchschnitte")
+st.title("Niederösterreich - Luftgüte - Best and Worst")
 
 sensor = st.selectbox("Sensor", list(POSSIBLE_SENSOR_MAP.keys()), index=2, format_func=lambda x: POSSIBLE_SENSOR_MAP[x])
 human_readable_sensor = POSSIBLE_SENSOR_MAP.get(sensor)

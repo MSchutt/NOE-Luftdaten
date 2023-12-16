@@ -4,6 +4,7 @@ from constants.sensor import POSSIBLE_SENSOR_MAP
 from parts.plots.animation import animate_map
 from utils.dto import FilterConfig
 
+st.title("Niederösterreich - Luftgüte - Animation")
 
 selected_sensor = st.selectbox("Sensor", list(POSSIBLE_SENSOR_MAP.keys()), index=2, format_func=lambda x: POSSIBLE_SENSOR_MAP[x])
 year = st.slider("Jahr", 2013, 2022, 2022)
