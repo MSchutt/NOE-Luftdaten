@@ -14,6 +14,8 @@ from utils.mapper import format_timestamp
 
 st.title("Niederösterreich - Luftgüte - Extremwerte")
 
+st.write("In dieser Ansicht können die Extremwerte (Minimum und Maximum) für einen bestimmten Zeitraum betrachtet werden. Von den Stationen mit dem Maximal- bzw. Minimalwert wird der Stundenmittelwert bzw. Tagesmittelwert des ganzen Jahres dargestellt. Es besteht die Möglichkeit, einen zeitlichen Filter einzustellen (Jahr).")
+
 # Dropdown select
 selected_type = st.selectbox("Extremwert", ["Maximum", "Minimum"])
 aggregate_type = st.selectbox("Aggregationsart", ["Stundenmittelwert", "Tagesmittelwert"])

@@ -15,8 +15,10 @@ st.set_page_config(
     page_icon="💨"
 )
 
+
 st.title("Niederösterreich - Luftgüte - Übersicht")
 
+st.write("In dieser Ansicht können Tages-, Monats- und Jahresmittelwerte betrachtet werden. Es besteht die Möglichkeit, einen zeitlichen Filter einzustellen, eine oder mehrere Stationen auszuwählen und nach Sensortypen (zum Beispiel Temperatur) zu filtern.")
 
 min_date, max_date = db_get_daterange()
 possible_stations = db_get_stations()
@@ -28,8 +30,8 @@ if start_date is None or end_date is None:
 
 # time diff between start and end date
 diff = end_date - start_date
-if diff.days < 360:
-    st.error("Der ausgewählte Zeitraum muss mindestens 365 Tage (1 Jahr) betragen.")
+if diff.days < 730:
+    st.error("Der ausgewählte Zeitraum muss mindestens 730 Tage (2 Jahr) betragen.")
     st.stop()
 
 # Apply the filter

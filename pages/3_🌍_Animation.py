@@ -6,6 +6,10 @@ from utils.dto import FilterConfig
 
 st.title("Niederösterreich - Luftgüte - Animation")
 
+st.write("""
+        In dieser Ansicht wird die zeitliche Entwicklung der Luftgüte für einen bestimmten Sensor angezeigt. Es besteht die Möglichkeit, nach Sensor und Jahr zu filtern.
+         """)
+
 selected_sensor = st.selectbox("Sensor", list(POSSIBLE_SENSOR_MAP.keys()), index=2, format_func=lambda x: POSSIBLE_SENSOR_MAP[x])
 year = st.slider("Jahr", 2013, 2022, 2022)
 animation_speed = st.slider("Animationsgeschwindigkeit (ms)", 100, 1000, 250)
