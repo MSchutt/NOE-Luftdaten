@@ -12,5 +12,5 @@ def get_db() -> Client:
         port=st.secrets["DB_PORT"],
         username=st.secrets["DB_USERNAME"],
         password=st.secrets["DB_PASSWORD"],
-        secure=True
+        # secure=True
     )
