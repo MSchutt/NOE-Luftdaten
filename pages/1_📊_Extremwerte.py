@@ -28,7 +28,7 @@ df = get_aggregated_extreme_values(year, use_min=use_min, table_name=tbl)
 start_date = datetime(year, 1, 1)
 end_date = datetime(year, 12, 31)
 
-plt_func = get_hourly_plot if aggregate_type == "HMW (Stundenmittelwert)" else get_daily_plot
+plt_func = get_hourly_plot if aggregate_type == "Stundenmittelwert" else get_daily_plot
 
 global_sensor_average = get_global_sensor_averages(start_date, end_date)
 
