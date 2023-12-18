@@ -35,6 +35,9 @@ def animate_map(config: FilterConfig, animate_speed: int = 250):
     
     center = {"lat": NOE_MAP_CENTER[0], "lon": NOE_MAP_CENTER[1]}
     
+    min_sensor = df[config.human_readable_sensor].quantile(0.05)
+    max_sensor = df[config.human_readable_sensor].quantile(0.95)
+    
     fig = px.scatter_mapbox(
         df,
         lat="Längengrad",
@@ -45,7 +48,7 @@ def animate_map(config: FilterConfig, animate_speed: int = 250):
         hover_data=["Station", config.human_readable_sensor],
         color_continuous_scale=px.colors.sequential.Bluered,
         zoom=7,
-        # range_color=[min_sensor, max_sensor],
+        range_color=[min_sensor, max_sensor],
         animation_frame="Datum",
         animation_group="Station",
         title=f"Tagesmittelwerte {config.human_readable_sensor} über das Jahr {config.target_year}"
