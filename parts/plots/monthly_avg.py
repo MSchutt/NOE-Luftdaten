@@ -36,7 +36,7 @@ def get_monthly_averages_plot_data(config: FilterConfig) -> pd.DataFrame:
     start_date_other = datetime(target_year, 1, 1)
     end_date_other = datetime(target_year, 12, 31)
     agg_data_target_year = get_monthly_averages(start_date_other, end_date_other, config.selected_stations, config.selected_sensor)
-    agg_data_target_year["name"] = agg_data_full["Station"].apply(lambda x: f"Aktuelles Jahr ({x}) ({start_date_begin.year}-{end_date_begin.year})")
+    agg_data_target_year["name"] = agg_data_full["Station"].apply(lambda x: f"Aktuelles Jahr ({x}) ({start_date_other.year}-{end_date_other.year})")
     
     df = pd.concat([agg_data_full, agg_data_target_year])
     
